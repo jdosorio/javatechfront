@@ -1,14 +1,16 @@
 <div class="container">
   <main class="form-signin w-100 m-auto">
-    <form>
+    <form novalidate [formGroup]="calculo">
       <h1 class="h3 mb-3 fw-normal">Ingrese los valores</h1>
 
       <div class="form-floating">
         <input
           type="number"
           class="form-control"
+          [ngClass]="{ 'is-invalid': paramN?.errors?.['required'] && calculo.get('paramN')?.touched }"
           id="floatingInput"
-          placeholder="name@example.com"
+          formControlName="paramN"
+          min="0"
           required
         />
         <label for="floatingInput">Valor N</label>
@@ -17,8 +19,10 @@
         <input
           type="number"
           class="form-control"
+          [ngClass]="{ 'is-invalid': paramX?.errors?.['required'] && calculo.get('paramX')?.touched }"
           id="floatingPassword"
-          placeholder="Password"
+          formControlName="paramX"
+          min="0"
           required
         />
         <label for="floatingPassword">Valor X</label>
@@ -27,19 +31,25 @@
         <input
           type="number"
           class="form-control"
+          [ngClass]="{ 'is-invalid': paramY?.errors?.['required'] && calculo.get('paramY')?.touched }"
           id="floatingPassword"
-          placeholder="Password"
+          formControlName="paramY"
+          min="0"
           required
         />
         <label for="floatingPassword">Valor Y</label>
       </div>
-
+      <p class="mt-5 mb-3 text-body-secondary" *ngIf="result">
+        El resultado es: {{ result }}
+      </p>
       <div class="form-check text-start my-2"></div>
-      <button class="btn btn-primary w-100 py-2" type="submit">
-        Enviar Get
-      </button>
-      <button class="btn btn-primary w-100 py-2 my-2" type="submit">
-        Enviar Post
+      <button
+        class="btn btn-primary w-100 py-2 my-2"
+        type="button"
+        (click)="onSubmit()"
+        [disabled]="calculo.invalid"
+      >
+        Enviar
       </button>
       <p class="mt-5 mb-3 text-body-secondary">Juan Osorio©2023</p>
     </form>
